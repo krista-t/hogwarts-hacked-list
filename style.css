@@ -64,7 +64,9 @@ main {
   -o-border-radius: 10px;
 }
 .close {
-  margin-right: 25rem;
+  position: absolute;
+  margin-left: 10rem;
+  color: #14075a;
 }
 
 #card {
