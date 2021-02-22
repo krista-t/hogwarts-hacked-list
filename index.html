@@ -8,19 +8,80 @@
     <title>Hogwarts Hacked List</title>
   </head>
   <body>
-    <header id="title">
-      <div class="logo">H</div>
-      <h1>Hogwarth´s Student List of the Class of 1991</h1>
+    <header>
+      <img src="" alt="logo" id="#hacked" />
+      <span id="title">
+        <h1>Hogwarth´s Student List- Class of 1991</h1>
+      </span>
     </header>
 
     <section id="infoLists">
       <div class="studentNumber">Student Number:</div>
+      <input
+        class="search"
+        type="text"
+        placeholder="&#128269; Search student          
+                                                        
+        &#10005" 
+      />
       <div class="filter">
-        Filter by
+        Filter:
         <select name="filters" id="selectFilter">
           <option value="*">All</option>
+          <option class="" value="Gryffindor">Gryffyndor</option>
+          <option class="" value="Slytherin">Slytherin</option>
+          <option class="" value="Hufflepuff">Hufflepuff</option>
+          <option class="" value="Ravenclaw">Ravenclaw</option>
+          <option class="" value="Expelled">Expelled</option>
+        </select>
+      </div>
+
+      <div class="sort">
+        Sort:
+        <select name="sort" id="selectSort">
+          <option value="firstName" data-sort-direction="asc">
+            First Name
+          </option>
+          <option value="lastName" data-sort-direction="asc">Last Name</option>
+          <option value="house" data-sort-direction="asc">House</option>
+          <option value="gender" data-sort-direction="asc">Gender</option>
         </select>
       </div>
     </section>
+
+    <!-- modal -->
+    <section id="modal" class="hide">
+      <div class="modal-data">
+        <div class="close-btn">&#10005;</div>
+      <div class="house-crest"></div>
+      <div class="modal-img"><img src="./images/abbott_h.png" alt=""></div>
+      <img data-field="img" src="" class="houseCrest" />
+      <div class="modalRightSide">
+        <h1 class="studentfirstName">a</h1>
+        <h1 class="studentmiddleName">b</h1>
+        <h1 class="studentlastName">c</h1>
+        <h3 class="studentHouse">d</h3>
+        <h3 class="studentGender">e</h3>
+        <h3 class="studentBlood">f</h3>
+      </div>
+    </div>
+    </section>
+
+    <main>
+      <section id="card">
+        <img src="./images/abbott_h.png" alt="" />
+        <p>first name:</p>
+        <p>middle name:</p>
+        <p>nickname:</p>
+        <p>last name:</p>
+        <button class="btn">see more</button>
+        <div class="statusBtns">
+          <button class="prefect">&#9734;</button>
+          <button class="expelled">&#10007;</button>
+          <button class="inquisitional">&#9826;</button>
+        </div>
+      </section>
+    </main>
+    <template></template>
   </body>
 </html>
