@@ -11,6 +11,8 @@ const StudentList = {
   middleName: "",
   nickName: "",
   house: "",
+  image: "",
+  gender: "",
 };
 
 function init() {
@@ -80,6 +82,8 @@ function prepareObject(listedStudent) {
     trimStartHouse.charAt(0).toUpperCase() +
     trimStartHouse.substring(1).toLowerCase();
 
+  //gender
+
   //create object from protoype
   const newStudentList = Object.create(StudentList);
 
@@ -110,6 +114,39 @@ function displayStudent(students) {
     clone.querySelector(
       "[data-field=house]"
     ).textContent = `HOUSE: ${student.house}`;
+
+    //imgages- cleaned and cloned
+    const img = clone.querySelector("#card img");
+    img.src =
+      "./images/" +
+      student.lastName.toLowerCase() +
+      "_" +
+      student.firstName[0].substring(0, 1).toLowerCase() +
+      ".png";
+
+    if (student.firstName === "Padma") {
+      img.src =
+        "./images/" + student.lastName.toLowerCase() + "_" + "padma" + ".png";
+    } else if (student.lastName === "Patil") {
+      img.src =
+        "./images/" +
+        student.lastName.toLowerCase() +
+        "_" +
+        student.firstName.toLowerCase() +
+        ".png";
+    } else if (student.lastName === "Finch-Fletchley") {
+      img.src =
+        "./images/" +
+        "fletchley" +
+        "_" +
+        student.firstName.substring(0, 1).toLowerCase() +
+        ".png";
+    } else if (student.firstName === "Leanne") {
+      img.src =
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/140px-No_image_available.svg.png";
+      img.style.borderColor = "#14075a";
+    }
+
     // append clone to list
     document.querySelector("main").appendChild(clone);
   });

@@ -83,7 +83,7 @@ main {
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
   width: 350px;
-  height: 380px;
+  height: 400px;
 }
 
 #card p {
@@ -113,7 +113,7 @@ main {
   color: var(--font-color);
   background-color: var(--cards-color);
   border: 0.1px solid var(--font-color);
-  margin-top: 1.5rem;
+  margin-top: 1.3rem;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
