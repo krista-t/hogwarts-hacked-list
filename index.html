@@ -22,7 +22,7 @@
         type="text"
         placeholder="&#128269; Search student"
       />
-      <span class="close">&#10005;</span>
+      <!-- <span class="close">&#10005;</span> -->
       <div class="filter">
         Filter:
         <select name="filters" id="selectFilter">
@@ -70,16 +70,24 @@
       <section id="card">
         <img src="./images/abbott_h.png" alt="" />
 
-        <p>first name:</p>
-        <p>middle name:</p>
-        <p>nickname:</p>
-        <p>last name:</p>
+        <p data-field="firstname"></p>
+        <p data-field="middlename"></p>
+        <p data-field="nickname"></p>
+        <p data-field="house"></p>
 
         <button class="btn">see more</button>
         <div class="statusBtns">
-          <button class="prefect">&#9734;</button>
-          <button class="expelled">&#10007;</button>
-          <button class="inquisitional">&#9826;</button>
+          <button data-field="prefect" class="prefect">
+            &#9734; <span class="pref-text">Add or Remove Prefect</span>
+          </button>
+          <button data-field="expelled" class="expelled">
+            &#10007;<span class="expell-text">Expell</span>
+          </button>
+          <button data-field="inquisitional" class="inquisitional">
+            &#9826;<span class="inquis-text"
+              >Add or Remove Inquisitional Squad- Slytherin only</span
+            >
+          </button>
         </div>
       </section>
     </main>
