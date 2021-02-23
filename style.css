@@ -83,7 +83,7 @@ main {
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
   width: 350px;
-  height: 350px;
+  height: 380px;
 }
 
 #card p {
@@ -100,6 +100,7 @@ main {
 
 #card img {
   max-width: 100%;
+  margin-top: 1.5rem;
   border: 5px solid var(--heading-color);
   border-radius: 30%;
   -webkit-border-radius: 30%;
@@ -112,6 +113,7 @@ main {
   color: var(--font-color);
   background-color: var(--cards-color);
   border: 0.1px solid var(--font-color);
+  margin-top: 1.5rem;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
