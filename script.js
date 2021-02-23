@@ -31,7 +31,6 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
-  // console.log(newStudentList);
 }
 
 function prepareObject(listedStudent) {
@@ -108,6 +107,9 @@ function displayStudent(students) {
       student.middleName;
     clone.querySelector("[data-field=nickname]").textContent = student.nickName;
     clone.querySelector("[data-field=lastname]").textContent = student.lastName;
+    clone.querySelector(
+      "[data-field=house]"
+    ).textContent = `HOUSE: ${student.house}`;
     // append clone to list
     document.querySelector("main").appendChild(clone);
   });
