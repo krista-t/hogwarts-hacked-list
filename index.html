@@ -16,7 +16,7 @@
     </header>
 
     <section id="infoLists">
-      <div class="studentNumber">Student Number:</div>
+      <div class="studentNumber"></div>
       <input
         class="search"
         type="text"
@@ -26,12 +26,12 @@
       <div class="filter">
         Filter:
         <select name="filters" id="selectFilter">
-          <option value="*">All</option>
-          <option class="" value="Gryffindor">Gryffyndor</option>
-          <option class="" value="Slytherin">Slytherin</option>
-          <option class="" value="Hufflepuff">Hufflepuff</option>
-          <option class="" value="Ravenclaw">Ravenclaw</option>
-          <option class="" value="Expelled">Expelled</option>
+          <option class="filter" value="all">All</option>
+          <option class="filter" value="Gryffindor">Gryffyndor</option>
+          <option class="filter" value="Slytherin">Slytherin</option>
+          <option class="filter" value="Hufflepuff">Hufflepuff</option>
+          <option class="filter" value="Ravenclaw">Ravenclaw</option>
+          <option class="filter" value="Expelled">Expelled</option>
         </select>
       </div>
 
@@ -47,9 +47,26 @@
         </select>
       </div>
     </section>
-
+    <!-- modal -->
+    <section id="modal" class="hide">
+      <div class="modal-data">
+        <div class="close-btn">&#10005;</div>
+        <div class="house-crest"></div>
+        <div class="modal-img">
+          <img src="" alt="" />
+        </div>
+        <img data-field="img" src="" class="houseCrest" />
+        <div class="modalRightSide"></div>
+        <h1 class="studentfirstName"></h1>
+        <h1 class="studentmiddleName"></h1>
+        <h1 class="studentlastName"></h1>
+        <h3 class="studentHouse"></h3>
+        <h3 class="studentGender"></h3>
+        <h3 class="studentBlood"></h3>
+      </div>
+    </section>
     <main></main>
-    <template>
+    <template id="template">
       <section id="card">
         <img src="./images/abbott_h.png" alt="" />
 
@@ -72,26 +89,6 @@
               >Add or Remove Inquisitional Squad- <i>Slytherin only</i>
             </span>
           </button>
-        </div>
-      </section>
-
-      <!-- modal -->
-      <section id="modal" class="hide">
-        <div class="modal-data">
-          <div class="close-btn">&#10005;</div>
-          <div class="house-crest"></div>
-          <div class="modal-img">
-            <img src="" alt="" />
-          </div>
-          <img data-field="img" src="" class="houseCrest" />
-          <div class="modalRightSide"></div>
-            <h1 class="studentfirstName"></h1>
-            <h1 class="studentmiddleName"></h1>
-            <h1 class="studentlastName"></h1>
-            <h3 class="studentHouse"></h3>
-            <h3 class="studentGender"></h3>
-            <h3 class="studentBlood"></h3>
-          </div>
         </div>
       </section>
     </template>

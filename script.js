@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", init);
 
 //placeholder array
 let studentListArr = [];
+
 //Prototype for all students
 const StudentList = {
   firstName: "",
@@ -16,6 +17,59 @@ const StudentList = {
 
 function init() {
   loadJSON();
+  document
+    .querySelectorAll(".filter")
+    .forEach((filter) => filter.addEventListener("click", selectFilter));
+}
+
+function selectFilter(e) {
+  const filterValue = e.target.value;
+  // console.log(filterValue);
+  const filterResult = getFilterResults(filterValue);
+  // displayStudent(filterResult);
+}
+
+function getFilterResults(house) {
+  let filtered = studentListArr;
+  if (house === "Ravenclaw") {
+    filtered = studentListArr.filter(isRavenclaw);
+  } else if (house === "Gryffindor") {
+    filtered = studentListArr.filter(isGryffindor);
+  } else if (house === "Slytherin") {
+    filtered = studentListArr.filter(isSlytherin);
+  } else if (house === "Hufflepuff") {
+    filtered = studentListArr.filter(isHufflepuff);
+  }
+
+  displayStudent(filtered);
+}
+
+function isRavenclaw(student) {
+  return student.house === "Ravenclaw";
+}
+
+function isGryffindor(student) {
+  if (student.house === "Gryffindor") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isSlytherin(student) {
+  if (student.house === "Slytherin") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isHufflepuff(student) {
+  if (student.house === "Hufflepuff") {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 //async function
@@ -31,6 +85,29 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
+  //add listeners to fiter and sort btns
+  //MODAL NOT WORKING
+  // document
+  //   .querySelectorAll(".btn")
+  //   .forEach((btn) => addEventListener("click", openModal));
+  // document.querySelector(".close-btn").addEventListener("click", function () {
+  //   document.querySelector("#modal").classList.add("hide");
+  //   console.log(document.querySelector("#modal"));
+  // });
+}
+
+//NOT WORKING
+function openModal() {
+  document.querySelector("#modal").classList.remove("hide");
+  getModalData(studentListArr);
+}
+
+//SKIPS TO LAST ONE IN ARr
+function getModalData(studentListArr) {
+  studentListArr.forEach((student) => {
+    console.log(student);
+    document.querySelector(".studentfirstName").textContent = student.firstName;
+  });
 }
 
 function prepareObject(listedStudent) {
@@ -60,7 +137,6 @@ function prepareObject(listedStudent) {
   let nickName;
   if (nickname.includes('"')) {
     nickName = nickname.substring(1, nickname.length - 1);
-    console.log(nickName);
   }
 
   //find lastname using spaces&capitalize where needed
@@ -82,10 +158,6 @@ function prepareObject(listedStudent) {
 
   //gender
   const gender = listedStudent.gender;
-  console.log(gender);
-
-  //image
-  let image = "./images/";
 
   //create object from protoype
   const newStudentList = Object.create(StudentList);
@@ -96,101 +168,69 @@ function prepareObject(listedStudent) {
   newStudentList.lastName = lastName;
   newStudentList.house = house;
   newStudentList.gender = gender;
-  console.log(middleName);
+
   //push in Arr
   studentListArr.push(newStudentList);
-  // console.table(newStudentList);
+
+  //UPDATE ACCORDING TO REMOVED
+  document.querySelector(
+    ".studentNumber"
+  ).textContent = `Student Number: ${studentListArr.length}`;
+
   return newStudentList;
 }
 
 //make for each
 function displayStudent(students) {
-  console.log(students); //cleaned data
-  students.forEach((student) => {
-    const clone = document.querySelector("template").content.cloneNode(true);
-    clone.querySelector(
-      "[data-field=firstname]"
-    ).textContent = `${student.firstName}`;
-    clone.querySelector("[data-field=middlename]").textContent =
-      student.middleName;
-    clone.querySelector("[data-field=nickname]").textContent = student.nickName;
-    clone.querySelector("[data-field=lastname]").textContent = student.lastName;
-    clone.querySelector(
-      "[data-field=house]"
-    ).textContent = `HOUSE: ${student.house}`;
-    //images- cleaned and cloned
-    const img = clone.querySelector("#card img");
+  // clear the list
+  document.querySelector("main").innerHTML = " ";
+  students.forEach(displaySingleStudent);
+  console.log(students);
+}
+function displaySingleStudent(student) {
+  const clone = document.querySelector("template").content.cloneNode(true);
+  clone.querySelector(
+    "[data-field=firstname]"
+  ).textContent = `${student.firstName}`;
+  clone.querySelector("[data-field=middlename]").textContent =
+    student.middleName;
+  clone.querySelector("[data-field=nickname]").textContent = student.nickName;
+  clone.querySelector("[data-field=lastname]").textContent = student.lastName;
+  clone.querySelector(
+    "[data-field=house]"
+  ).textContent = `HOUSE: ${student.house}`;
+  //images- cleaned and cloned
+  const img = clone.querySelector("#card img");
+  img.src =
+    "./images/" +
+    student.lastName.toLowerCase() +
+    "_" +
+    student.firstName[0].substring(0, 1).toLowerCase() +
+    ".png";
+
+  if (student.firstName === "Padma") {
+    img.src =
+      "./images/" + student.lastName.toLowerCase() + "_" + "padma" + ".png";
+  } else if (student.lastName === "Patil") {
     img.src =
       "./images/" +
       student.lastName.toLowerCase() +
       "_" +
-      student.firstName[0].substring(0, 1).toLowerCase() +
+      student.firstName.toLowerCase() +
       ".png";
-
-    if (student.firstName === "Padma") {
-      img.src =
-        "./images/" + student.lastName.toLowerCase() + "_" + "padma" + ".png";
-    } else if (student.lastName === "Patil") {
-      img.src =
-        "./images/" +
-        student.lastName.toLowerCase() +
-        "_" +
-        student.firstName.toLowerCase() +
-        ".png";
-    } else if (student.lastName === "Finch-Fletchley") {
-      img.src =
-        "./images/" +
-        "fletchley" +
-        "_" +
-        student.firstName.substring(0, 1).toLowerCase() +
-        ".png";
-    } else if (student.firstName === "Leanne") {
-      img.src =
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/140px-No_image_available.svg.png";
-      img.style.borderColor = "#14075a";
-    }
-    clone.querySelector(".btn").addEventListener("click", function () {
-      document.querySelector("#modal").classList.remove("hide");
-    });
-    clone.querySelector(".close-btn").addEventListener("click", function () {
-      document.querySelector("#modal").classList.add("hide");
-    });
-    clone.querySelector(
-      ".studentfirstName"
-    ).textContent = `NAME: ${student.firstName}`;
-    clone.querySelector(
-      ".studentmiddleName"
-    ).textContent = `MIDDLENAME: ${student.middleName}`;
-    clone.querySelector(
-      ".studentlastName"
-    ).textContent = `LAST: ${student.lastName}`;
-    clone.querySelector(
-      ".studentHouse"
-    ).textContent = `HOUSE: ${student.house}`;
-    clone.querySelector(
-      ".studentGender"
-    ).textContent = `GENDER: ${student.gender}`;
-    clone.querySelector("#modal img").textContent =
+  } else if (student.lastName === "Finch-Fletchley") {
+    img.src =
       "./images/" +
-      student.lastName.toLowerCase() +
+      "fletchley" +
       "_" +
-      student.firstName[0].substring(0, 1).toLowerCase() +
+      student.firstName.substring(0, 1).toLowerCase() +
       ".png";
+  } else if (student.firstName === "Leanne") {
+    img.src =
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/140px-No_image_available.svg.png";
+    img.style.borderColor = "#14075a";
+  }
 
-    // append clone to list
-    document.querySelector("main").appendChild(clone);
-  });
-}
-
-function filter() {
-  //filter according to options and call display filtered
-}
-
-function sort() {
-  //sort all acording to sor options and call display
-}
-
-function displayList() {
-  //clear list
-  //for each students display student
+  // append clone to list
+  document.querySelector("main").appendChild(clone);
 }
