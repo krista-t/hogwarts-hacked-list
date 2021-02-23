@@ -11,13 +11,10 @@ const StudentList = {
   middleName: "",
   nickName: "",
   house: "",
-  image: "",
   gender: "",
 };
 
 function init() {
-  //events for listeners
-
   loadJSON();
 }
 
@@ -30,6 +27,7 @@ async function loadJSON() {
   prepareObjects(jsonData);
 }
 
+//delegator
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
@@ -78,11 +76,16 @@ function prepareObject(listedStudent) {
 
   //trim space in front of string&capitalize
   let trimStartHouse = listedStudent.house.trimStart();
-  let house =
+  const house =
     trimStartHouse.charAt(0).toUpperCase() +
     trimStartHouse.substring(1).toLowerCase();
 
   //gender
+  const gender = listedStudent.gender;
+  console.log(gender);
+
+  //image
+  let image = "./images/";
 
   //create object from protoype
   const newStudentList = Object.create(StudentList);
@@ -92,6 +95,7 @@ function prepareObject(listedStudent) {
   newStudentList.nickName = nickName;
   newStudentList.lastName = lastName;
   newStudentList.house = house;
+  newStudentList.gender = gender;
   console.log(middleName);
   //push in Arr
   studentListArr.push(newStudentList);
@@ -114,8 +118,7 @@ function displayStudent(students) {
     clone.querySelector(
       "[data-field=house]"
     ).textContent = `HOUSE: ${student.house}`;
-
-    //imgages- cleaned and cloned
+    //images- cleaned and cloned
     const img = clone.querySelector("#card img");
     img.src =
       "./images/" +
@@ -146,6 +149,33 @@ function displayStudent(students) {
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/140px-No_image_available.svg.png";
       img.style.borderColor = "#14075a";
     }
+    clone.querySelector(".btn").addEventListener("click", function () {
+      document.querySelector("#modal").classList.remove("hide");
+    });
+    clone.querySelector(".close-btn").addEventListener("click", function () {
+      document.querySelector("#modal").classList.add("hide");
+    });
+    clone.querySelector(
+      ".studentfirstName"
+    ).textContent = `NAME: ${student.firstName}`;
+    clone.querySelector(
+      ".studentmiddleName"
+    ).textContent = `MIDDLENAME: ${student.middleName}`;
+    clone.querySelector(
+      ".studentlastName"
+    ).textContent = `LAST: ${student.lastName}`;
+    clone.querySelector(
+      ".studentHouse"
+    ).textContent = `HOUSE: ${student.house}`;
+    clone.querySelector(
+      ".studentGender"
+    ).textContent = `GENDER: ${student.gender}`;
+    clone.querySelector("#modal img").textContent =
+      "./images/" +
+      student.lastName.toLowerCase() +
+      "_" +
+      student.firstName[0].substring(0, 1).toLowerCase() +
+      ".png";
 
     // append clone to list
     document.querySelector("main").appendChild(clone);
