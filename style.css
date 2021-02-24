@@ -274,7 +274,7 @@ main {
 
 .modal-data {
   width: 50%;
-  height: 75%;
+  height: auto;
   margin: 5rem auto;
   background: var(--background-color);
   display: flex;
@@ -289,7 +289,7 @@ main {
 
 .house-crest img {
   max-width: 70%;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .rightCol {

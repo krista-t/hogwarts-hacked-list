@@ -310,12 +310,14 @@ function displaySingleStudent(student) {
     if (student.firstName == studentName) {
       //crest img
       const crestImg = document.querySelector(".house-crest img");
+      crestImg.style.width = "762px";
+      crestImg.style.height = "580px";
       if (student.house === "Gryffindor") {
         console.log(crestImg.src);
         crestImg.src = "./images/" + student.house + ".png";
       } else if (student.house === "Slytherin") {
-        //make it smaller so it fits design
-        crestImg.style.width = "550px";
+        //make it same size as first so it fits design
+
         crestImg.src = "./images/" + student.house + ".png";
       } else if (student.house === "Hufflepuff") {
         crestImg.src = "./images/" + student.house + ".png";
