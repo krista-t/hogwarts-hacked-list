@@ -308,6 +308,20 @@ function displaySingleStudent(student) {
       "[data-field=firstname]"
     ).textContent;
     if (student.firstName == studentName) {
+      //crest img
+      const crestImg = document.querySelector(".house-crest img");
+      if (student.house === "Gryffindor") {
+        console.log(crestImg.src);
+        crestImg.src = "./images/" + student.house + ".png";
+      } else if (student.house === "Slytherin") {
+        crestImg.src = "./images/" + student.house + ".png";
+      } else if (student.house === "Hufflepuff") {
+        crestImg.src = "./images/" + student.house + ".png";
+      } else if (student.house === "Ravenclaw") {
+        crestImg.src = "./images/" + student.house + ".png";
+      }
+
+      //student img
       const img = document.querySelector(".modal-img img");
       img.src =
         "./images/" +
@@ -315,13 +329,7 @@ function displaySingleStudent(student) {
         "_" +
         student.firstName[0].substring(0, 1).toLowerCase() +
         ".png";
-      console.log(
-        "./images/" +
-          student.lastName.toLowerCase() +
-          "_" +
-          student.firstName[0].substring(0, 1).toLowerCase() +
-          ".png"
-      );
+
       if (student.firstName === "Padma") {
         img.src =
           "./images/" + student.lastName.toLowerCase() + "_" + "padma" + ".png";

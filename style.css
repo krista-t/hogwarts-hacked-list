@@ -31,8 +31,8 @@ header {
 }
 
 header img {
-  max-width: 100px;
-  margin-left: 2%;
+  max-width: 130px;
+  margin-left: 0.5%;
 }
 
 .hacked {
@@ -191,6 +191,10 @@ main {
   -moz-transform: scale(1.1);
   -ms-transform: scale(1.1);
   -o-transform: scale(1.1);
+}
+
+.expelled:hover {
+  background-color: coral;
 }
 
 .pref-text {
