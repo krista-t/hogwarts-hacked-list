@@ -4,10 +4,6 @@ window.addEventListener("DOMContentLoaded", init);
 
 //placeholder array
 let studentListArr = [];
-// //UPDATE ACCORDING TO REMOVED
-// document.querySelector(
-//   ".studentNumber"
-// ).textContent = `Student Number: ${studentListArr.length}`;
 
 //Prototype for all students
 const StudentList = {
@@ -39,7 +35,6 @@ function sortBy(e) {
 
 //GETS SORTING BY ASC ORDER (alphabetically)
 function getSortResult(value) {
-  console.log(value);
   let sort = studentListArr;
   if (value === "firstName") {
     sort = studentListArr.sort(function (a, b) {
@@ -95,8 +90,12 @@ function getFilterResults(house) {
   }
   //  TODO: EXPELLED IS TRUE
 
-  //TODO: UPDATE NUMBER IN HEADER
   displayStudent(filtered);
+
+  //UPDATE ACCORDING TO FILTERED
+  document.querySelector(
+    ".studentNumber"
+  ).textContent = `Student Number: ${filtered.length}`;
 }
 
 function isRavenclaw(student) {
@@ -251,6 +250,10 @@ function prepareObject(listedStudent) {
 function displayStudent(students) {
   // clear the list
   document.querySelector("main").innerHTML = " ";
+  //UPDATE ACCORDING TO REMOVED
+  document.querySelector(
+    ".studentNumber"
+  ).textContent = `Student Number: ${studentListArr.length}`;
   students.forEach(displaySingleStudent);
 }
 function displaySingleStudent(student) {
