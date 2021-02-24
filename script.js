@@ -4,6 +4,10 @@ window.addEventListener("DOMContentLoaded", init);
 
 //placeholder array
 let studentListArr = [];
+// //UPDATE ACCORDING TO REMOVED
+// document.querySelector(
+//   ".studentNumber"
+// ).textContent = `Student Number: ${studentListArr.length}`;
 
 //Prototype for all students
 const StudentList = {
@@ -45,6 +49,7 @@ function getSortResult(value) {
         return 1;
       }
     });
+    console.log(sort);
   } else if (value === "lastName") {
     sort = studentListArr.sort(function (a, b) {
       if (a.lastName < b.lastName) {
@@ -61,10 +66,9 @@ function getSortResult(value) {
         return 1;
       }
     });
-
-    //DISPLAY SORTED LIST
-    displayStudent(sort);
   }
+  //DISPLAY SORTED LIST
+  displayStudent(sort);
 }
 
 //SELECTS VALUE OF ALL FILTERS AND CALLS FILTER FUNC
@@ -240,20 +244,14 @@ function prepareObject(listedStudent) {
   //push in Arr
   studentListArr.push(newStudentList);
 
-  //UPDATE ACCORDING TO REMOVED
-  document.querySelector(
-    ".studentNumber"
-  ).textContent = `Student Number: ${studentListArr.length}`;
-
   return newStudentList;
 }
 
-//make for each
+//DISPLAY STUDENTS
 function displayStudent(students) {
   // clear the list
   document.querySelector("main").innerHTML = " ";
   students.forEach(displaySingleStudent);
-  console.log(students);
 }
 function displaySingleStudent(student) {
   const clone = document.querySelector("template").content.cloneNode(true);
