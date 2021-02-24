@@ -13,6 +13,7 @@ const StudentList = {
   nickName: "",
   house: "",
   gender: "",
+  blood: "",
 };
 
 function init() {
@@ -20,15 +21,59 @@ function init() {
   document
     .querySelectorAll(".filter")
     .forEach((filter) => filter.addEventListener("click", selectFilter));
+  document
+    .querySelectorAll(".sort")
+    .forEach((sort) => sort.addEventListener("click", sortBy));
 }
 
+//SELECTS VALUE OF ALL SORTING AND CALLS SORT FUNC
+function sortBy(e) {
+  const sortValue = e.target.value;
+  // console.log(sortValue);
+  const sortResult = getSortResult(sortValue);
+}
+
+//GETS SORTING BY ASC ORDER (alphabetically)
+function getSortResult(value) {
+  console.log(value);
+  let sort = studentListArr;
+  if (value === "firstName") {
+    sort = studentListArr.sort(function (a, b) {
+      if (a.firstName < b.firstName) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  } else if (value === "lastName") {
+    sort = studentListArr.sort(function (a, b) {
+      if (a.lastName < b.lastName) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  } else if (value === "house") {
+    sort = studentListArr.sort(function (a, b) {
+      if (a.house < b.house) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
+    //DISPLAY SORTED LIST
+    displayStudent(sort);
+  }
+}
+
+//SELECTS VALUE OF ALL FILTERS AND CALLS FILTER FUNC
 function selectFilter(e) {
   const filterValue = e.target.value;
-  // console.log(filterValue);
   const filterResult = getFilterResults(filterValue);
-  // displayStudent(filterResult);
 }
 
+//GET FILTERS BY HOUSE & REST house becomes value
 function getFilterResults(house) {
   let filtered = studentListArr;
   if (house === "Ravenclaw") {
@@ -39,13 +84,23 @@ function getFilterResults(house) {
     filtered = studentListArr.filter(isSlytherin);
   } else if (house === "Hufflepuff") {
     filtered = studentListArr.filter(isHufflepuff);
+  } else if (house === "girl") {
+    filtered = studentListArr.filter(isGirl);
+  } else if (house === "boy") {
+    filtered = studentListArr.filter(isBoy);
   }
+  //  TODO: EXPELLED IS TRUE
 
+  //TODO: UPDATE NUMBER IN HEADER
   displayStudent(filtered);
 }
 
 function isRavenclaw(student) {
-  return student.house === "Ravenclaw";
+  if (student.house === "Ravenclaw") {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function isGryffindor(student) {
@@ -72,6 +127,22 @@ function isHufflepuff(student) {
   }
 }
 
+function isGirl(student) {
+  if (student.gender === "girl") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isBoy(student) {
+  if (student.gender === "boy") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 //async function
 async function loadJSON() {
   const response = await fetch(
@@ -85,20 +156,17 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
-  //add listeners to fiter and sort btns
-  //MODAL NOT WORKING
-  // document
-  //   .querySelectorAll(".btn")
-  //   .forEach((btn) => addEventListener("click", openModal));
-  // document.querySelector(".close-btn").addEventListener("click", function () {
-  //   document.querySelector("#modal").classList.add("hide");
-  //   console.log(document.querySelector("#modal"));
-  // });
+  document.querySelector(".btn").addEventListener("click", openModal);
+  document.querySelector(".close-btn").addEventListener("click", closeModal); //NOT WORKING
 }
 
 //NOT WORKING
 function openModal() {
   document.querySelector("#modal").classList.remove("hide");
+  getModalData(studentListArr);
+}
+function closeModal() {
+  document.querySelector("#modal").classList.add("hide");
   getModalData(studentListArr);
 }
 
