@@ -322,6 +322,29 @@ function displaySingleStudent(student) {
           student.firstName[0].substring(0, 1).toLowerCase() +
           ".png"
       );
+      if (student.firstName === "Padma") {
+        img.src =
+          "./images/" + student.lastName.toLowerCase() + "_" + "padma" + ".png";
+      } else if (student.lastName === "Patil") {
+        img.src =
+          "./images/" +
+          student.lastName.toLowerCase() +
+          "_" +
+          student.firstName.toLowerCase() +
+          ".png";
+      } else if (student.lastName === "Finch-Fletchley") {
+        img.src =
+          "./images/" +
+          "fletchley" +
+          "_" +
+          student.firstName.substring(0, 1).toLowerCase() +
+          ".png";
+      } else if (student.firstName === "Leanne") {
+        img.src =
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/140px-No_image_available.svg.png";
+        img.style.borderColor = "#14075a";
+      }
+
       document.querySelector(
         ".studentfirstName"
       ).textContent = `FIRSTNAME: ${student.firstName}`;

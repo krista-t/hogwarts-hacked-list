@@ -23,12 +23,46 @@ body {
 }
 
 header {
-  display: flex;
-  justify-content: space-around;
   margin-top: 2%;
   color: var(--heading-color);
   font-family: var(--display-font);
   font-size: 1.4rem;
+  list-style: none;
+}
+
+header img {
+  max-width: 100px;
+  margin-left: 2%;
+}
+
+.hacked {
+  visibility: hidden;
+  position: absolute;
+  left: 2%;
+  top: 5%;
+  width: 120px;
+  padding: 10px 10px;
+  background-color: rgb(12, 1, 49);
+  border-radius: 25px;
+}
+
+header img:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.logo:hover .hacked {
+  visibility: visible;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+h1 {
+  color: var(--heading-color);
+  font-family: var(--display-font);
+  font-size: 3rem;
+  text-align: center;
+  margin-top: -5%;
 }
 
 #infoLists {
@@ -150,8 +184,7 @@ main {
 .btn:hover,
 .prefect:hover,
 .expelled:hover,
-.inquisitional:hover,
-#hacked:hover {
+.inquisitional:hover {
   cursor: pointer;
   transform: scale(1.1);
   -webkit-transform: scale(1.1);
