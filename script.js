@@ -322,13 +322,34 @@ function displaySingleStudent(student) {
           student.firstName[0].substring(0, 1).toLowerCase() +
           ".png"
       );
-      document.querySelector(".studentfirstName").textContent =
-        student.firstName;
-      document.querySelector(".studentlastName").textContent = student.lastName;
-      document.querySelector(".studentmiddleName").textContent =
-        student.middleName;
-      document.querySelector(".studentHouse").textContent = student.house;
-      document.querySelector(".studentGender").textContent = student.gender;
+      document.querySelector(
+        ".studentfirstName"
+      ).textContent = `FIRSTNAME: ${student.firstName}`;
+      document.querySelector(
+        ".studentlastName"
+      ).textContent = `LASTNAME: ${student.lastName}`;
+      if (student.middleName === undefined) {
+        document.querySelector(".studentmiddleName").style.display = "none";
+      } else {
+        document.querySelector(
+          ".studentmiddleName"
+        ).textContent = `MIDDLENAME: ${student.middleName}`;
+      }
+
+      if (student.nickName === undefined) {
+        document.querySelector(".studentnickName").style.display = "none";
+      } else {
+        document.querySelector(
+          ".studentnickName"
+        ).textContent = `NICK-NAME: ${student.nickName}`;
+      }
+
+      document.querySelector(
+        ".studentHouse"
+      ).textContent = `HOUSE: ${student.house}`;
+      document.querySelector(
+        ".studentGender"
+      ).textContent = `GENDER: ${student.gender}`;
       //TODO: fetch additional data for blood
       document.querySelector(".studentBlood").textContent = student.blood;
 

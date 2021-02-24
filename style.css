@@ -15,7 +15,6 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  scroll-behavior: smooth;
 }
 
 body {
@@ -242,10 +241,24 @@ main {
   margin: 5rem auto;
   background: var(--background-color);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   flex-direction: column;
   border-radius: 15px;
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-content: flex-end;
 }
 
 .close-btn {
