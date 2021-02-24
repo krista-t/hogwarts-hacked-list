@@ -72,7 +72,7 @@ function selectFilter(e) {
   const filterResult = getFilterResults(filterValue);
 }
 
-//GET FILTERS BY HOUSE & REST house becomes value
+//GET FILTERS  house=value
 function getFilterResults(house) {
   let filtered = studentListArr;
   if (house === "Ravenclaw") {
@@ -90,9 +90,11 @@ function getFilterResults(house) {
   }
   //  TODO: EXPELLED IS TRUE
 
+  //TODO: FLAG ON SORTING AND FILTERING
+
   displayStudent(filtered);
 
-  //UPDATE ACCORDING TO FILTERED
+  //UPDATE NUMBER ACCORDING TO FILTERED
   document.querySelector(
     ".studentNumber"
   ).textContent = `Student Number: ${filtered.length}`;
@@ -159,25 +161,43 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
-  document.querySelector(".btn").addEventListener("click", openModal);
-  document.querySelector(".close-btn").addEventListener("click", closeModal); //NOT WORKING
+  //TODO: SEARCH FILTER
+  document.querySelector(".search").addEventListener("input", searchStudent);
+  //event for btns
+  document
+    .querySelectorAll(".btn")
+    .forEach((btn) => btn.addEventListener("click", openModal));
 }
 
-//NOT WORKING
+//SEARCH STUDENTS
+function searchStudent() {
+  //get the value from the input
+  const searchValue = document.querySelector(".search").value;
+  //filter through the students and find student based on search value
+  const search = studentListArr.filter(
+    (student) =>
+      student.firstName.toUpperCase().includes(searchValue.toUpperCase()) ||
+      student.firstName.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  displayStudent(search);
+  //UPDATE NUMBER ACCORDING TO FILTERED
+  document.querySelector(
+    ".studentNumber"
+  ).textContent = `Student Number: ${search.length}`;
+}
+
+//NOT WORKING, skips to last in array
 function openModal() {
+  console.log("clicked");
   document.querySelector("#modal").classList.remove("hide");
-  getModalData(studentListArr);
-}
-function closeModal() {
-  document.querySelector("#modal").classList.add("hide");
-  getModalData(studentListArr);
-}
-
-//SKIPS TO LAST ONE IN ARr
-function getModalData(studentListArr) {
   studentListArr.forEach((student) => {
-    console.log(student);
     document.querySelector(".studentfirstName").textContent = student.firstName;
+    console.log(student); //jumps to last in arr
+  });
+
+  document.querySelector(".close-btn").addEventListener("click", () => {
+    document.querySelector("#modal").classList.add("hide");
   });
 }
 
