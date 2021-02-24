@@ -314,6 +314,8 @@ function displaySingleStudent(student) {
         console.log(crestImg.src);
         crestImg.src = "./images/" + student.house + ".png";
       } else if (student.house === "Slytherin") {
+        //make it smaller so it fits design
+        crestImg.style.width = "550px";
         crestImg.src = "./images/" + student.house + ".png";
       } else if (student.house === "Hufflepuff") {
         crestImg.src = "./images/" + student.house + ".png";
@@ -355,16 +357,16 @@ function displaySingleStudent(student) {
 
       document.querySelector(
         ".studentfirstName"
-      ).textContent = `FIRSTNAME: ${student.firstName}`;
+      ).textContent = `${student.firstName}`;
       document.querySelector(
         ".studentlastName"
-      ).textContent = `LASTNAME: ${student.lastName}`;
+      ).textContent = `${student.lastName}`;
       if (student.middleName === undefined) {
         document.querySelector(".studentmiddleName").style.display = "none";
       } else {
         document.querySelector(
           ".studentmiddleName"
-        ).textContent = `MIDDLENAME: ${student.middleName}`;
+        ).textContent = `${student.middleName}`;
       }
 
       if (student.nickName === undefined) {
@@ -372,7 +374,7 @@ function displaySingleStudent(student) {
       } else {
         document.querySelector(
           ".studentnickName"
-        ).textContent = `NICK-NAME: ${student.nickName}`;
+        ).textContent = `${student.nickName}`;
       }
 
       document.querySelector(

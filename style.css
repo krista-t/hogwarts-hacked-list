@@ -278,9 +278,6 @@ main {
   margin: 5rem auto;
   background: var(--background-color);
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
-  /* flex-direction: column; */
   border-radius: 15px;
 }
 
@@ -288,11 +285,10 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-left: 5%;
 }
 
 .house-crest img {
-  max-width: 80%;
+  max-width: 70%;
   margin-top: 50px;
 }
 
@@ -305,7 +301,6 @@ main {
 
 .modal-img img {
   width: 80%;
-  /* margin: 3rem 3.5rem; */
   border: 5px solid var(--heading-color);
   border-radius: 30%;
 }
@@ -319,7 +314,7 @@ h2 {
 h3 {
   color: var(--heading-color);
   font-family: var(--main-font);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   text-align: left;
 }
 
