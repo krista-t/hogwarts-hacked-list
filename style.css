@@ -269,18 +269,18 @@ main {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgb(44, 44, 44, 0.9);
+  background: rgba(24, 25, 53, 0.55);
 }
 
 .modal-data {
-  width: 70%;
+  width: 50%;
   height: 75%;
   margin: 5rem auto;
   background: var(--background-color);
   display: flex;
   /* justify-content: center;
   align-items: center; */
-  flex-direction: column;
+  /* flex-direction: column; */
   border-radius: 15px;
 }
 
@@ -288,20 +288,45 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-content: flex-start;
+  margin-left: 5%;
+}
+
+.house-crest img {
+  max-width: 80%;
+  margin-top: 50px;
 }
 
 .rightCol {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-content: flex-end;
+  justify-content: flex-start;
+  margin: 75px 0 0 -50px;
+}
+
+.modal-img img {
+  width: 80%;
+  /* margin: 3rem 3.5rem; */
+  border: 5px solid var(--heading-color);
+  border-radius: 30%;
+}
+
+h2 {
+  color: var(--heading-color);
+  font-family: var(--main-font);
+  font-size: 1.8rem;
+  text-align: left;
+}
+h3 {
+  color: var(--heading-color);
+  font-family: var(--main-font);
+  font-size: 1.5rem;
+  text-align: left;
 }
 
 .close-btn {
   position: absolute;
   top: 12%;
-  right: 17%;
+  right: 28%;
   font-size: 2rem;
   font-weight: 900;
   cursor: pointer;
