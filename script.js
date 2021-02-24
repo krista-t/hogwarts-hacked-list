@@ -161,19 +161,31 @@ async function loadJSON() {
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
-  //TODO: SEARCH FILTER
+  //SEARCH FILTER EVENT
   document.querySelector(".search").addEventListener("input", searchStudent);
-  //event for btns
-  document
-    .querySelectorAll(".btn")
-    .forEach((btn) => btn.addEventListener("click", openModal));
+  //TODO: event for modal, not working, and not working on filtered arr
+  // document
+  //   .querySelectorAll(".btn")
+  //   .forEach((btn) => btn.addEventListener("click", openModal));
 }
+
+//TODO: NOT WORKING, skips to last in array, not working on filtered lists
+// function openModal() {
+//   console.log("clicked");
+//   document.querySelector("#modal").classList.remove("hide");
+//   studentListArr.forEach((student) => {
+//     document.querySelector(".studentfirstName").textContent = student.firstName;
+//     console.log(student); //jumps to last in arr
+//   });
+//   document.querySelector(".close-btn").addEventListener("click", () => {
+//     document.querySelector("#modal").classList.add("hide");
+//   });
+// }
 
 //SEARCH STUDENTS
 function searchStudent() {
-  //get the value from the input
   const searchValue = document.querySelector(".search").value;
-  //filter through the students and find student based on search value
+  //FILTER THROUGH AND ADJUST CAPITALIZATION
   const search = studentListArr.filter(
     (student) =>
       student.firstName.toUpperCase().includes(searchValue.toUpperCase()) ||
@@ -185,20 +197,6 @@ function searchStudent() {
   document.querySelector(
     ".studentNumber"
   ).textContent = `Student Number: ${search.length}`;
-}
-
-//NOT WORKING, skips to last in array
-function openModal() {
-  console.log("clicked");
-  document.querySelector("#modal").classList.remove("hide");
-  studentListArr.forEach((student) => {
-    document.querySelector(".studentfirstName").textContent = student.firstName;
-    console.log(student); //jumps to last in arr
-  });
-
-  document.querySelector(".close-btn").addEventListener("click", () => {
-    document.querySelector("#modal").classList.add("hide");
-  });
 }
 
 function prepareObject(listedStudent) {
@@ -276,6 +274,8 @@ function displayStudent(students) {
   ).textContent = `Student Number: ${studentListArr.length}`;
   students.forEach(displaySingleStudent);
 }
+
+//DISPLAY EACH STUDENT
 function displaySingleStudent(student) {
   const clone = document.querySelector("template").content.cloneNode(true);
   clone.querySelector(
@@ -318,6 +318,22 @@ function displaySingleStudent(student) {
     img.src =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/140px-No_image_available.svg.png";
     img.style.borderColor = "#14075a";
+  }
+
+  //modal event
+  clone.querySelector(".btn").addEventListener("click", openModal);
+
+  function openModal() {
+    console.log("clicked");
+    document.querySelector("#modal").classList.remove("hide");
+    studentListArr.forEach((student) => {
+      document.querySelector(".studentfirstName").textContent =
+        student.firstName;
+      console.log(student); //jumps to last in arr
+    });
+    document.querySelector(".close-btn").addEventListener("click", () => {
+      document.querySelector("#modal").classList.add("hide");
+    });
   }
 
   // append clone to list
