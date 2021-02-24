@@ -163,48 +163,31 @@ function prepareObjects(jsonData) {
   displayStudent(newStudentList);
   //SEARCH FILTER EVENT
   document.querySelector(".search").addEventListener("input", searchStudent);
-  //TODO: event for modal, not working, and not working on filtered arr
-  // document
-  //   .querySelectorAll(".btn")
-  //   .forEach((btn) => btn.addEventListener("click", openModal));
 }
-
-//TODO: NOT WORKING, skips to last in array, not working on filtered lists
-// function openModal() {
-//   console.log("clicked");
-//   document.querySelector("#modal").classList.remove("hide");
-//   studentListArr.forEach((student) => {
-//     document.querySelector(".studentfirstName").textContent = student.firstName;
-//     console.log(student); //jumps to last in arr
-//   });
-//   document.querySelector(".close-btn").addEventListener("click", () => {
-//     document.querySelector("#modal").classList.add("hide");
-//   });
-// }
 
 //SEARCH STUDENTS
 function searchStudent() {
   const searchValue = document.querySelector(".search").value;
-  //FILTER THROUGH AND ADJUST CAPITALIZATION
+  //FILTER THROUGH SEARCH WITH ANY CAPITALIZATION
   const search = studentListArr.filter(
     (student) =>
       student.firstName.toUpperCase().includes(searchValue.toUpperCase()) ||
       student.firstName.toLowerCase().includes(searchValue.toLowerCase())
   );
-
   displayStudent(search);
+
   //UPDATE NUMBER ACCORDING TO FILTERED
   document.querySelector(
     ".studentNumber"
   ).textContent = `Student Number: ${search.length}`;
 }
 
+//CLEAN LIST; MAKE NEW OBJ; PUSH TO ARR
 function prepareObject(listedStudent) {
   let newList = listedStudent.fullname.trim();
   //find first and last space
   const firstSpace = newList.indexOf(" ");
   const lastSpace = newList.lastIndexOf(" ");
-
   //name first letter capital, rest lowercase
   let name = newList.substring(firstSpace, 0);
   let firstName =
@@ -212,7 +195,6 @@ function prepareObject(listedStudent) {
   if (firstName == "") {
     firstName = newList.substring(lastSpace + 1);
   }
-
   //find middle name using space&make capitals where needed
   const middle = newList.substring(firstSpace + 1, lastSpace);
   let middleName =
@@ -220,14 +202,12 @@ function prepareObject(listedStudent) {
   if (middleName.includes(" ") || middleName.includes('"')) {
     middleName = undefined;
   }
-
   //find nickname and remove ""
   let nickname = newList.substring(firstSpace + 1, lastSpace);
   let nickName;
   if (nickname.includes('"')) {
     nickName = nickname.substring(1, nickname.length - 1);
   }
-
   //find lastname using spaces&capitalize where needed
   const last = newList.substring(lastSpace + 1);
   let lastName = last.charAt(0).toUpperCase() + last.substring(1).toLowerCase();
@@ -238,13 +218,11 @@ function prepareObject(listedStudent) {
       lastName[1].substring(1).toLowerCase();
     lastName = lastName.join("-");
   }
-
   //trim space in front of string&capitalize
   let trimStartHouse = listedStudent.house.trimStart();
   const house =
     trimStartHouse.charAt(0).toUpperCase() +
     trimStartHouse.substring(1).toLowerCase();
-
   //gender
   const gender = listedStudent.gender;
 
@@ -268,7 +246,7 @@ function prepareObject(listedStudent) {
 function displayStudent(students) {
   // clear the list
   document.querySelector("main").innerHTML = " ";
-  //UPDATE ACCORDING TO REMOVED
+  //display nr of students
   document.querySelector(
     ".studentNumber"
   ).textContent = `Student Number: ${studentListArr.length}`;
@@ -288,7 +266,7 @@ function displaySingleStudent(student) {
   clone.querySelector(
     "[data-field=house]"
   ).textContent = `HOUSE: ${student.house}`;
-  //images- cleaned and cloned
+  //images- cleaned and added
   const img = clone.querySelector("#card img");
   img.src =
     "./images/" +
@@ -320,22 +298,46 @@ function displaySingleStudent(student) {
     img.style.borderColor = "#14075a";
   }
 
-  //modal event
-  clone.querySelector(".btn").addEventListener("click", openModal);
-
-  function openModal() {
-    console.log("clicked");
-    document.querySelector("#modal").classList.remove("hide");
-    studentListArr.forEach((student) => {
+  //MODAL EVENT
+  clone.querySelector(".btn").addEventListener("click", (e) => {
+    openModal(e);
+  });
+  function openModal(e) {
+    //ID WHICH BUTTON IS CLICKED, MUST BE UNIQUE ex firstname
+    const studentName = e.target.parentNode.querySelector(
+      "[data-field=firstname]"
+    ).textContent;
+    if (student.firstName == studentName) {
+      const img = document.querySelector(".modal-img img");
+      img.src =
+        "./images/" +
+        student.lastName.toLowerCase() +
+        "_" +
+        student.firstName[0].substring(0, 1).toLowerCase() +
+        ".png";
+      console.log(
+        "./images/" +
+          student.lastName.toLowerCase() +
+          "_" +
+          student.firstName[0].substring(0, 1).toLowerCase() +
+          ".png"
+      );
       document.querySelector(".studentfirstName").textContent =
         student.firstName;
-      console.log(student); //jumps to last in arr
-    });
-    document.querySelector(".close-btn").addEventListener("click", () => {
-      document.querySelector("#modal").classList.add("hide");
-    });
-  }
+      document.querySelector(".studentlastName").textContent = student.lastName;
+      document.querySelector(".studentmiddleName").textContent =
+        student.middleName;
+      document.querySelector(".studentHouse").textContent = student.house;
+      document.querySelector(".studentGender").textContent = student.gender;
+      //TODO: fetch additional data for blood
+      document.querySelector(".studentBlood").textContent = student.blood;
 
+      document.querySelector("#modal").classList.remove("hide");
+      document.querySelector(".close-btn").addEventListener("click", () => {
+        document.querySelector("#modal").classList.add("hide");
+      });
+    }
+  }
   // append clone to list
   document.querySelector("main").appendChild(clone);
 }
