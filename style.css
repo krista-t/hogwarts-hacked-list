@@ -301,7 +301,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin: 75px 0 0 -50px;
+  margin: 75px 0 0 -150px;
 }
 
 .modal-img img {
@@ -313,7 +313,7 @@ main {
 h2 {
   color: var(--heading-color);
   font-family: var(--main-font);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   text-align: left;
 }
 h3 {
@@ -326,7 +326,7 @@ h3 {
 .close-btn,
 .closebtn {
   position: absolute;
-  top: 15%;
+  top: 12%;
   right: 28%;
   font-size: 2rem;
   font-weight: 900;

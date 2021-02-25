@@ -16,6 +16,7 @@ const StudentList = {
   blood: "",
   expelled: false,
   inquisitional: false,
+  prefect: false,
 };
 
 // global filter object
@@ -444,6 +445,9 @@ function displaySingleStudent(student) {
   //function to call expel outside with right param
   function expellClicked(e) {
     toggleExpel(e, student);
+    clone
+      .querySelector("[data-field=expelled]")
+      .removeEventListener("click", expellClicked);
   }
 
   //INQUISITIONAL
@@ -456,6 +460,22 @@ function displaySingleStudent(student) {
   //function to call expel outside with right param
   function inquiClicked(e) {
     toggleInquisitional(e, student);
+    clone
+      .querySelector("[data-field=inquisitional]")
+      .removeEventListener("click", inquiClicked);
+  }
+
+  //PREFECT
+  clone.querySelector("[data-field=prefect]").addEventListener("click", (e) => {
+    prefectClicked(e);
+  });
+
+  //function to call prefect outside with right param
+  function prefectClicked(e) {
+    togglePrefect(e, student);
+    clone
+      .querySelector("[data-field=prefect]")
+      .removeEventListener("click", prefectClicked);
   }
 
   // append clone to list
@@ -486,15 +506,14 @@ function toggleExpel(e, student) {
 function toggleInquisitional(e, student) {
   if (student.inquisitional === false) {
     student.inquisitional = true;
-    e.target.style.backgroundColor = "rgb(59, 56, 56)";
-    e.target.textContent = "☩";
+    e.target.style.backgroundColor = "#464242";
+    e.target.textContent = "✞";
   } else {
     student.inquisitional = false;
     e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
     e.target.textContent = "♢";
   }
-
-  //TODO: nicer popup
+  //Inqui popup
   if (student.house != "Slytherin") {
     student.inquisitional = false;
     document.querySelector("#inqui-modal").classList.remove("hide");
@@ -504,7 +523,31 @@ function toggleInquisitional(e, student) {
     e.target.textContent = "♢";
     document.querySelector(".closebtn").addEventListener("click", () => {
       document.querySelector("#inqui-modal").classList.add("hide");
-      console.log("clicked");
     });
   }
+}
+
+// TOGGLE PREFECT
+function togglePrefect(e, student) {
+  if (student.prefect === false) {
+    student.prefect = true;
+    e.target.style.backgroundColor = "yellow";
+    e.target.textContent = "PREF★";
+  } else {
+    student.prefect = false;
+    e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
+    e.target.textContent = "☆ ";
+  }
+  //Prefect popup
+  //   if (student.house != "Slytherin") {
+  //     student.inquisitional = false;
+  //     document.querySelector("#inqui-modal").classList.remove("hide");
+  //     // alert("Slytherin only");
+  //     document.querySelector(".inquiTxt").textContent = "Slytherin only!";
+  //     e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
+  //     e.target.textContent = "♢";
+  //     document.querySelector(".closebtn").addEventListener("click", () => {
+  //       document.querySelector("#inqui-modal").classList.add("hide");
+  //     });
+  //   }
 }
