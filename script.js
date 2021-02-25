@@ -17,7 +17,7 @@ const StudentList = {
   expelled: false,
 };
 
-//TODO: global filter object
+// global filter object
 const settings = {
   filter: "all",
   sortBy: "",
@@ -176,12 +176,14 @@ function isBoy(student) {
   }
 }
 
-//  TODO: EXPELLED IS TRUE
+//EXPELLED IS TRUE
 function isExpelled(student) {
-  if (student.expelled === false) {
-    student.expelled = true;
+  console.log(student.expelled);
+  if (student.expelled) {
+    return true;
+  } else {
+    return false;
   }
-  console.log(student.expelled); //sets it to true
 }
 
 //async function
@@ -193,7 +195,7 @@ async function loadJSON() {
   prepareObjects(jsonData);
 }
 
-//delegator
+//
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
@@ -347,7 +349,6 @@ function displaySingleStudent(student) {
       //crest img
       const crestImg = document.querySelector(".house-crest img");
       crestImg.style.width = "762px";
-      crestImg.style.height = "580px";
       if (student.house === "Gryffindor") {
         console.log(crestImg.src);
         crestImg.src = "./images/" + student.house + ".png";
@@ -421,6 +422,7 @@ function displaySingleStudent(student) {
       document.querySelector(
         ".studentGender"
       ).textContent = `GENDER: ${student.gender}`;
+
       //TODO: fetch additional data for blood
       document.querySelector(".studentBlood").textContent = student.blood;
 
@@ -430,6 +432,63 @@ function displaySingleStudent(student) {
       });
     }
   }
+
+  // expel student
+  // clone.querySelector("[data-field=expelled]").dataset.expelled =
+  //   student.expelStudent;
+  // clone
+  //   .querySelector("[data-field=expelled]")
+  //   .addEventListener("click", expelStudentNow);
+
+  // function expelStudentNow(event) {
+  //   if (student.expelStudent === true) {
+  //     student.expelStudent = false;
+  //     console.log(student.expelStudent);
+  //     event.target.style.backgroundColor = "yellow";
+  //     document.querySelector("#card").style.backgroundColor = "red";
+  //   } else {
+  //     student.expelStudent = true;
+  //     event.target.style.backgroundColor = "red";
+  //     document.querySelector("#card").style.backgroundColor = "blue";
+  //   }
+  // }
+
+  //EXPELLED
+  clone
+    .querySelector("[data-field=expelled]")
+    .addEventListener("click", (e) => {
+      expellClicked(e);
+    });
+
+  //function to call expel outside with right param
+  function expellClicked(e) {
+    toggleExpel(e, student);
+  }
+
   // append clone to list
   document.querySelector("main").appendChild(clone);
+}
+
+//TOGGLE EXPEL
+function toggleExpel(e, student) {
+  const studentName = e.target.parentNode.parentNode.querySelector(
+    "[data-field=firstname]"
+  ).textContent;
+
+  if (student.expelled === studentName) {
+    console.log("hey name");
+  }
+  // const studentName = e.target.nextSibling.parentNode.querySelector(
+  //   "[data-field=firstname]"
+  // ).textContent;
+
+  if (student.expelled === false) {
+    student.expelled = true;
+    e.target.style.backgroundColor = "red";
+    e.target.textContent = "✗";
+  } else {
+    student.expelled = false;
+    e.target.style.backgroundColor = "rgba(241, 233, 71, 0.9)";
+    e.target.textContent = "✓";
+  }
 }
