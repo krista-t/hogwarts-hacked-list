@@ -178,7 +178,7 @@ function isBoy(student) {
   }
 }
 
-//EXPELLED IS TRUE
+//EXPELLED
 function isExpelled(student) {
   console.log(student.expelled);
   if (student.expelled) {
@@ -215,7 +215,6 @@ function searchStudent() {
       student.firstName.toLowerCase().includes(searchValue.toLowerCase())
   );
   displayStudent(search);
-
   //UPDATE NUMBER ACCORDING TO FILTERED
   document.querySelector(
     ".studentNumber"
@@ -506,8 +505,8 @@ function toggleExpel(e, student) {
 function toggleInquisitional(e, student) {
   if (student.inquisitional === false) {
     student.inquisitional = true;
-    e.target.style.backgroundColor = "#464242";
-    e.target.textContent = "✞";
+    e.target.style.backgroundColor = "#C0C0C0";
+    e.target.textContent = "✟";
   } else {
     student.inquisitional = false;
     e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
@@ -517,7 +516,6 @@ function toggleInquisitional(e, student) {
   if (student.house != "Slytherin") {
     student.inquisitional = false;
     document.querySelector("#inqui-modal").classList.remove("hide");
-    // alert("Slytherin only");
     document.querySelector(".inquiTxt").textContent = "Slytherin only!";
     e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
     e.target.textContent = "♢";
