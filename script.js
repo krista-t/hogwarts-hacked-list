@@ -472,9 +472,6 @@ function displaySingleStudent(student) {
   //function to call prefect outside with right param
   function prefectClicked(e) {
     togglePrefect(e, student);
-    clone
-      .querySelector("[data-field=prefect]")
-      .removeEventListener("click", prefectClicked);
   }
 
   // append clone to list
@@ -537,15 +534,36 @@ function togglePrefect(e, student) {
     e.target.textContent = "☆ ";
   }
   //Prefect popup
-  //   if (student.house != "Slytherin") {
-  //     student.inquisitional = false;
-  //     document.querySelector("#inqui-modal").classList.remove("hide");
-  //     // alert("Slytherin only");
-  //     document.querySelector(".inquiTxt").textContent = "Slytherin only!";
-  //     e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
-  //     e.target.textContent = "♢";
-  //     document.querySelector(".closebtn").addEventListener("click", () => {
-  //       document.querySelector("#inqui-modal").classList.add("hide");
-  //     });
-  //   }
+  const studentNr = studentListArr.filter((student) => student.prefect);
+  const prefects = studentNr.length;
+
+  if (prefects > 2) {
+    student.prefect = false;
+    e.target.disabled = true;
+    e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
+    e.target.textContent = "☆ ";
+    document.querySelector("#prefect-modal").classList.remove("hide");
+    document.querySelector(".prefAlert h4").textContent =
+      "There can only be two prefects!";
+
+    //TODO: remove one by clicking a or b
+    document.querySelector(".a").addEventListener("click", () => {
+      console.log(studentNr[0]);
+
+      //TODO:
+      if (student.prefect === false) {
+        console.log(student.prefect);
+        document.querySelector("[data-field=prefect]").style.backgroundColor =
+          "rgba(221, 217, 142, 0.9)";
+        // e.target.textContent = "☆ ";
+      }
+      studentNr.shift([0]); //WORKS
+      document.querySelector("#prefect-modal").classList.add("hide");
+    });
+
+    //close if you want to leave it without removing
+    document.querySelector(".close_but").addEventListener("click", () => {
+      document.querySelector("#prefect-modal").classList.add("hide");
+    });
+  }
 }

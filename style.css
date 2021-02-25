@@ -258,14 +258,15 @@ main {
 }
 
 .prefect:hover .pref-text,
-.expelled:hover .expell-text,
+.expelled.expelled:hover .expell-text,
 .inquisitional:hover .inquis-text {
   visibility: visible;
   cursor: pointer;
 }
 
 #modal,
-#inqui-modal {
+#inqui-modal,
+#prefect-modal {
   position: fixed;
   z-index: 10;
   width: 100%;
@@ -278,7 +279,7 @@ main {
 }
 
 .modal-data {
-  width: 50%;
+  width: 45%;
   height: auto;
   margin: 5rem auto;
   background: var(--background-color);
@@ -301,7 +302,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin: 75px 0 0 -150px;
+  margin: 100px 0 0 -150px;
 }
 
 .modal-img img {
@@ -324,16 +325,20 @@ h3 {
 }
 
 .close-btn,
-.closebtn {
+.closebtn,
+.close_but {
   position: absolute;
   top: 12%;
-  right: 28%;
+  right: 30%;
   font-size: 2rem;
   font-weight: 900;
   cursor: pointer;
 }
 
-.close-btn:hover {
+.close-btn:hover,
+.closebtn:hover,
+.close_but:hover,
+.btns button:hover {
   cursor: pointer;
   transform: scale(1.1);
   -webkit-transform: scale(1.1);
@@ -342,7 +347,8 @@ h3 {
   -o-transform: scale(1.1);
 }
 
-.inquiAlert {
+.inquiAlert,
+.prefAlert {
   width: 50%;
   height: 50%;
   margin: 5rem auto;
@@ -351,7 +357,32 @@ h3 {
   justify-content: center;
   align-items: center;
   border-radius: 15px;
+  font-size: 1.4rem;
 }
+
 .inquiTxt {
   font-size: 4rem;
+}
+.prefAlert h4 {
+  font-size: 2rem;
+  text-align: center;
+  color: var(--heading-color);
+}
+
+.btns button {
+  background-color: var(--font-color);
+  color: var(--background-color);
+  text-transform: uppercase;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.b {
+  margin-top: 10px;
 }
