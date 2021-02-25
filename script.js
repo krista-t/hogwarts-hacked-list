@@ -16,6 +16,12 @@ const StudentList = {
   blood: "",
 };
 
+//TODO: global filter object
+const settings = {
+  filter: "all",
+  sortBy: "",
+};
+
 function init() {
   loadJSON();
   document
@@ -69,35 +75,47 @@ function getSortResult(value) {
 //SELECTS VALUE OF ALL FILTERS AND CALLS FILTER FUNC
 function selectFilter(e) {
   const filterValue = e.target.value;
-  const filterResult = getFilterResults(filterValue);
+  // const filterResult = getFilterResults(filterValue);
+
+  setFilter(filterValue); //only to call new list to display
 }
 
-//GET FILTERS  house=value
-function getFilterResults(house) {
-  let filtered = studentListArr;
-  if (house === "Ravenclaw") {
-    filtered = studentListArr.filter(isRavenclaw);
-  } else if (house === "Gryffindor") {
-    filtered = studentListArr.filter(isGryffindor);
-  } else if (house === "Slytherin") {
-    filtered = studentListArr.filter(isSlytherin);
-  } else if (house === "Hufflepuff") {
-    filtered = studentListArr.filter(isHufflepuff);
-  } else if (house === "girl") {
-    filtered = studentListArr.filter(isGirl);
-  } else if (house === "boy") {
-    filtered = studentListArr.filter(isBoy);
-  }
-  //  TODO: EXPELLED IS TRUE
+//BUILDS NEW LIST SO SORTING AND FILTERING WORK WITH NO INTERFERANCE
+function setFilter(filter) {
+  settings.filterBy = filter;
+  //  console.log(settings.filterBy);
+  buildList();
+}
 
-  //TODO: FLAG ON SORTING AND FILTERING
-
-  displayStudent(filtered);
-
+function buildList() {
+  const filteredList = filterList(studentListArr);
+  displayStudent(filteredList); //works!
   //UPDATE NUMBER ACCORDING TO FILTERED
   document.querySelector(
     ".studentNumber"
-  ).textContent = `Student Number: ${filtered.length}`;
+  ).textContent = `Student Number: ${filteredList.length}`;
+}
+
+//GET FILTERS  settings.filterBy=value
+function filterList(filtered) {
+  //entire array
+  if (settings.filterBy === "Ravenclaw") {
+    filtered = studentListArr.filter(isRavenclaw);
+    console.log(settings.filter);
+  } else if (settings.filterBy === "Gryffindor") {
+    filtered = studentListArr.filter(isGryffindor);
+  } else if (settings.filterBy === "Slytherin") {
+    filtered = studentListArr.filter(isSlytherin);
+  } else if (settings.filterBy === "Hufflepuff") {
+    filtered = studentListArr.filter(isHufflepuff);
+  } else if (settings.filterBy === "girl") {
+    filtered = studentListArr.filter(isGirl);
+  } else if (settings.filterBy === "boy") {
+    filtered = studentListArr.filter(isBoy);
+  }
+  //  TODO: EXPELLED IS TRUE
+  // console.log(filtered);
+  return filtered;
 }
 
 function isRavenclaw(student) {
