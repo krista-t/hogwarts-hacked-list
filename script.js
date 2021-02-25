@@ -15,12 +15,13 @@ const StudentList = {
   gender: "",
   blood: "",
   expelled: false,
+  inquisitional: false,
 };
 
 // global filter object
 const settings = {
   filter: "all",
-  sortBy: "",
+  sortBy: " ",
 };
 
 function init() {
@@ -433,26 +434,6 @@ function displaySingleStudent(student) {
     }
   }
 
-  // expel student
-  // clone.querySelector("[data-field=expelled]").dataset.expelled =
-  //   student.expelStudent;
-  // clone
-  //   .querySelector("[data-field=expelled]")
-  //   .addEventListener("click", expelStudentNow);
-
-  // function expelStudentNow(event) {
-  //   if (student.expelStudent === true) {
-  //     student.expelStudent = false;
-  //     console.log(student.expelStudent);
-  //     event.target.style.backgroundColor = "yellow";
-  //     document.querySelector("#card").style.backgroundColor = "red";
-  //   } else {
-  //     student.expelStudent = true;
-  //     event.target.style.backgroundColor = "red";
-  //     document.querySelector("#card").style.backgroundColor = "blue";
-  //   }
-  // }
-
   //EXPELLED
   clone
     .querySelector("[data-field=expelled]")
@@ -465,11 +446,23 @@ function displaySingleStudent(student) {
     toggleExpel(e, student);
   }
 
+  //INQUISITIONAL
+  clone
+    .querySelector("[data-field=inquisitional]")
+    .addEventListener("click", (e) => {
+      inquiClicked(e);
+    });
+
+  //function to call expel outside with right param
+  function inquiClicked(e) {
+    toggleInquisitional(e, student);
+  }
+
   // append clone to list
   document.querySelector("main").appendChild(clone);
 }
 
-//TOGGLE EXPEL
+//TOGGLE EXPELL
 function toggleExpel(e, student) {
   const studentName = e.target.parentNode.parentNode.querySelector(
     "[data-field=firstname]"
@@ -478,10 +471,6 @@ function toggleExpel(e, student) {
   if (student.expelled === studentName) {
     console.log("hey name");
   }
-  // const studentName = e.target.nextSibling.parentNode.querySelector(
-  //   "[data-field=firstname]"
-  // ).textContent;
-
   if (student.expelled === false) {
     student.expelled = true;
     e.target.style.backgroundColor = "red";
@@ -490,5 +479,26 @@ function toggleExpel(e, student) {
     student.expelled = false;
     e.target.style.backgroundColor = "rgba(241, 233, 71, 0.9)";
     e.target.textContent = "✓";
+  }
+}
+
+// TOGGLE INQUISITIONAL
+function toggleInquisitional(e, student) {
+  if (student.inquisitional === false) {
+    student.inquisitional = true;
+    e.target.style.backgroundColor = "rgb(59, 56, 56)";
+    e.target.textContent = "☩";
+  } else {
+    student.inquisitional = false;
+    e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
+    e.target.textContent = "♢";
+  }
+
+  //TODO: nicer popup
+  if (student.house != "Slytherin") {
+    alert("Slytherin only");
+    student.inquisitional = false;
+    e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
+    e.target.textContent = "♢";
   }
 }
