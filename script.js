@@ -26,41 +26,45 @@ function init() {
   loadJSON();
   document
     .querySelectorAll(".filter")
-    .forEach((filter) => filter.addEventListener("click", selectFilter));
+    .forEach((filter) => filter.addEventListener("change", selectFilter));
   document
     .querySelectorAll(".sort")
-    .forEach((sort) => sort.addEventListener("click", sortBy));
+    .forEach((sort) => sort.addEventListener("change", sortBy));
 }
 
 //SELECTS VALUE OF ALL SORTING AND CALLS SORT FUNC
 function sortBy(e) {
   const sortValue = e.target.value;
   // console.log(sortValue);
-  const sortResult = getSortResult(sortValue);
+  // const sortResult = getSortResult(sortValue);
+
+  setSort(sortValue);
 }
 
+function setSort(value) {
+  settings.sortBy = value;
+  buildList();
+}
 //GETS SORTING BY ASC ORDER (alphabetically)
-function getSortResult(value) {
-  let sort = studentListArr;
-  if (value === "firstName") {
-    sort = studentListArr.sort(function (a, b) {
+function getSortResult(sorted) {
+  if (settings.sortBy === "firstName") {
+    sorted = studentListArr.sort(function (a, b) {
       if (a.firstName < b.firstName) {
         return -1;
       } else {
         return 1;
       }
     });
-    console.log(sort);
-  } else if (value === "lastName") {
-    sort = studentListArr.sort(function (a, b) {
+  } else if (settings.sortBy === "lastName") {
+    sorted = studentListArr.sort(function (a, b) {
       if (a.lastName < b.lastName) {
         return -1;
       } else {
         return 1;
       }
     });
-  } else if (value === "house") {
-    sort = studentListArr.sort(function (a, b) {
+  } else if (settings.sortBy === "house") {
+    sorted = studentListArr.sort(function (a, b) {
       if (a.house < b.house) {
         return -1;
       } else {
@@ -68,8 +72,8 @@ function getSortResult(value) {
       }
     });
   }
-  //DISPLAY SORTED LIST
-  displayStudent(sort);
+
+  return sorted;
 }
 
 //SELECTS VALUE OF ALL FILTERS AND CALLS FILTER FUNC
@@ -83,13 +87,18 @@ function selectFilter(e) {
 //BUILDS NEW LIST SO SORTING AND FILTERING WORK WITH NO INTERFERANCE
 function setFilter(filter) {
   settings.filterBy = filter;
-  //  console.log(settings.filterBy);
   buildList();
 }
 
 function buildList() {
+  //new list for filter
   const filteredList = filterList(studentListArr);
   displayStudent(filteredList); //works!
+
+  //new list for sort from filtered to work together
+  const sortedList = getSortResult(studentListArr);
+  displayStudent(filteredList);
+
   //UPDATE NUMBER ACCORDING TO FILTERED
   document.querySelector(
     ".studentNumber"
@@ -98,7 +107,7 @@ function buildList() {
 
 //GET FILTERS  settings.filterBy=value
 function filterList(filtered) {
-  //entire array
+  //takes all array to sort and filtered
   if (settings.filterBy === "Ravenclaw") {
     filtered = studentListArr.filter(isRavenclaw);
     console.log(settings.filter);
