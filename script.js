@@ -204,7 +204,7 @@ function prepareObjects(jsonData) {
   document.querySelector(".search").addEventListener("input", searchStudent);
 }
 
-//SEARCH STUDENTS
+//SEARCH STUDENTS TODO: clear "X" on search
 function searchStudent() {
   const searchValue = document.querySelector(".search").value;
   //FILTER THROUGH SEARCH WITH ANY CAPITALIZATION
@@ -496,9 +496,15 @@ function toggleInquisitional(e, student) {
 
   //TODO: nicer popup
   if (student.house != "Slytherin") {
-    alert("Slytherin only");
     student.inquisitional = false;
+    document.querySelector("#inqui-modal").classList.remove("hide");
+    // alert("Slytherin only");
+    document.querySelector(".inquiTxt").textContent = "Slytherin only!";
     e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
     e.target.textContent = "♢";
+    document.querySelector(".closebtn").addEventListener("click", () => {
+      document.querySelector("#inqui-modal").classList.add("hide");
+      console.log("clicked");
+    });
   }
 }
