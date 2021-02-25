@@ -43,7 +43,12 @@ header img {
   width: 120px;
   padding: 10px 10px;
   background-color: rgb(12, 1, 49);
+  color: var(--font-color);
   border-radius: 25px;
+}
+
+.hacked i {
+  font-size: 2rem;
 }
 
 header img:hover {

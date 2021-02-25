@@ -14,6 +14,7 @@ const StudentList = {
   house: "",
   gender: "",
   blood: "",
+  expelled: false,
 };
 
 //TODO: global filter object
@@ -110,7 +111,6 @@ function filterList(filtered) {
   //takes all array to sort and filtered
   if (settings.filterBy === "Ravenclaw") {
     filtered = studentListArr.filter(isRavenclaw);
-    console.log(settings.filter);
   } else if (settings.filterBy === "Gryffindor") {
     filtered = studentListArr.filter(isGryffindor);
   } else if (settings.filterBy === "Slytherin") {
@@ -121,9 +121,10 @@ function filterList(filtered) {
     filtered = studentListArr.filter(isGirl);
   } else if (settings.filterBy === "boy") {
     filtered = studentListArr.filter(isBoy);
+  } else if (settings.filterBy === "expelled") {
+    filtered = studentListArr.filter(isExpelled);
   }
-  //  TODO: EXPELLED IS TRUE
-  // console.log(filtered);
+
   return filtered;
 }
 
@@ -173,6 +174,14 @@ function isBoy(student) {
   } else {
     return false;
   }
+}
+
+//  TODO: EXPELLED IS TRUE
+function isExpelled(student) {
+  if (student.expelled === false) {
+    student.expelled = true;
+  }
+  console.log(student.expelled); //sets it to true
 }
 
 //async function
