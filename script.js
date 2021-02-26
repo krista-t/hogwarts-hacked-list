@@ -522,43 +522,41 @@ function toggleInquisitional(e, student) {
   }
 }
 
-// TOGGLE PREFECT
-
-//TO DO makePrefect function(student)
-
-function displayAsPrefect(e, student) {
-  student.prefect = true;
-  e.target.style.backgroundColor = "yellow";
-  e.target.textContent = "PREF★";
-}
-
-function displayAsNotPrefect(e, student) {
-  student.prefect = false;
-  e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
-  e.target.textContent = "☆ ";
-}
-
+//toggle prefect btns and status
 function togglePrefect(e, student) {
   if (student.prefect === false) {
-    displayAsPrefect(e, student);
+    student.prefect = true;
+    e.target.style.backgroundColor = "yellow";
+    e.target.textContent = "PREF★";
     prefectList(student);
   } else {
     student.prefect = false;
-    displayAsNotPrefect(e, student);
+    e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
+    e.target.textContent = "☆ ";
+    displayAsNotPrefect(student);
   }
 }
 
-//make array and filter
-function prefectList(student) {
-  //filter students
+//display as not prefect
+function displayAsNotPrefect(student) {
+  console.log(student);
+  student.prefect = false;
+  document.querySelector(".prefect").style.backgroundColor =
+    "rgba(221, 217, 142, 0.9)";
+  // e.target.textContent = "☆ ";
+}
+
+//make array and filter according to prefect status
+function prefectList() {
   const studentNr = studentListArr.filter((student) => student.prefect);
   const prefects = studentNr.length;
   // console.log(student);
   if (prefects > 2) {
-    showPopUp(studentNr); //call new func
+    showPopUp(studentNr);
   }
 }
 
+//show popup and add listeners to btns for removing
 function showPopUp(studentNr) {
   console.log(studentNr);
   document.querySelector("#prefect-modal").classList.remove("hide");
@@ -575,15 +573,15 @@ function showPopUp(studentNr) {
   document.querySelector(".b").addEventListener("click", removeSecond);
 }
 
-//remove first student NEED array param
+//remove first student
 function removeFirst() {
   const studentNr = studentListArr.filter((student) => student.prefect);
   let removed = studentNr.shift();
-
   document.querySelector("#prefect-modal").classList.add("hide");
-  alert("prefect is removed, toggle btn error");
+  alert("prefect is removed, toggle btn color error");
   //TODO: remove prefect status from btn
 
+  displayAsNotPrefect(removed);
   //close if you want to leave it without removing
   document.querySelector(".close_but").addEventListener("click", () => {
     document.querySelector("#prefect-modal").classList.add("hide");
@@ -598,7 +596,7 @@ function removeSecond() {
   document.querySelector("#prefect-modal").classList.add("hide");
 
   //TODO: remove prefect status from btn
-  alert("prefect is removed, toggle btn error");
+  alert("prefect is removed, toggle btn color error");
 
   //close if you want to leave it without removing
   document.querySelector(".close_but").addEventListener("click", () => {
