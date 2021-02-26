@@ -83,7 +83,6 @@ function getSortResult(sorted) {
 function selectFilter(e) {
   const filterValue = e.target.value;
   // const filterResult = getFilterResults(filterValue);
-
   setFilter(filterValue); //only to call new list to display
 }
 
@@ -125,8 +124,11 @@ function filterList(filtered) {
     filtered = studentListArr.filter(isBoy);
   } else if (settings.filterBy === "expelled") {
     filtered = studentListArr.filter(isExpelled);
+  } else if (settings.filterBy === "not-expelled") {
+    filtered = studentListArr.filter(isNotExpelled);
+  } else if (settings.filterBy === "inquisitional") {
+    filtered = studentListArr.filter(isInquisitional);
   }
-
   return filtered;
 }
 
@@ -188,16 +190,58 @@ function isExpelled(student) {
   }
 }
 
+//NOT EXPELLED
+function isNotExpelled(student) {
+  // console.log(student.expelled);
+  if (student.expelled === false) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//PREFECT
+function isInquisitional(student) {
+  if (student.inquisitional) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 //async function
 async function loadJSON() {
   const response = await fetch(
     "https://petlatkea.dk/2021/hogwarts/students.json"
   );
   const jsonData = await response.json();
+
+  //Get bloodstatus data
+  const responseB = await fetch(
+    "https://petlatkea.dk/2021/hogwarts/families.json"
+  );
+  const jsonDataB = await responseB.json();
   prepareObjects(jsonData);
+  giveBloodStatus(jsonDataB);
 }
 
-//
+// calculate blood status
+function giveBloodStatus(jsonDataB) {
+  console.log(jsonDataB);
+  studentListArr.forEach((student) => {
+    if (jsonDataB.pure.includes(student.lastName)) {
+      student.bloodStatus = "Pure";
+    } else if (jsonDataB.half.includes(student.lastName)) {
+      student.bloodStatus = "Half";
+    } else {
+      student.bloodStatus = "Muggleborn";
+    }
+    // console.log(student);
+    displaySingleStudent(student);
+  });
+}
+
+//prepare data
 function prepareObjects(jsonData) {
   const newStudentList = jsonData.map(prepareObject);
   displayStudent(newStudentList);
@@ -294,6 +338,7 @@ function displayStudent(students) {
 
 //DISPLAY EACH STUDENT
 function displaySingleStudent(student) {
+  console.log(student);
   const clone = document.querySelector("template").content.cloneNode(true);
   clone.querySelector(
     "[data-field=firstname]"
@@ -302,6 +347,9 @@ function displaySingleStudent(student) {
     student.middleName;
   clone.querySelector("[data-field=nickname]").textContent = student.nickName;
   clone.querySelector("[data-field=lastname]").textContent = student.lastName;
+  if (student.lastName == "Leanne") {
+    student.lastName = "";
+  }
   clone.querySelector(
     "[data-field=house]"
   ).textContent = `HOUSE: ${student.house}`;
@@ -342,25 +390,27 @@ function displaySingleStudent(student) {
     openModal(e);
   });
   function openModal(e) {
-    //ID WHICH BUTTON IS CLICKED, MUST BE UNIQUE ex firstname
+    //FIND WHICH BUTTON IS CLICKED, MUST BE UNIQUE ex firstname
     const studentName = e.target.parentNode.querySelector(
       "[data-field=firstname]"
     ).textContent;
     if (student.firstName == studentName) {
-      //crest img
+      //crest img and background color
       const crestImg = document.querySelector(".house-crest img");
+      const bckgrColor = document.querySelector(".modal-data");
       crestImg.style.width = "762px";
       if (student.house === "Gryffindor") {
-        console.log(crestImg.src);
+        bckgrColor.style.backgroundColor = "rgb(116, 8, 8)";
         crestImg.src = "./images/" + student.house + ".png";
       } else if (student.house === "Slytherin") {
-        //make it same size as first so it fits design
-
+        bckgrColor.style.backgroundColor = "rgb(3, 54, 29)";
         crestImg.src = "./images/" + student.house + ".png";
       } else if (student.house === "Hufflepuff") {
         crestImg.src = "./images/" + student.house + ".png";
+        bckgrColor.style.backgroundColor = "rgba(114, 85, 5)";
       } else if (student.house === "Ravenclaw") {
         crestImg.src = "./images/" + student.house + ".png";
+        bckgrColor.style.backgroundColor = "rgb(7, 16, 145)";
       }
 
       //student img
@@ -424,8 +474,11 @@ function displaySingleStudent(student) {
         ".studentGender"
       ).textContent = `GENDER: ${student.gender}`;
 
-      //TODO: fetch additional data for blood
-      document.querySelector(".studentBlood").textContent = student.blood;
+      document.querySelector(
+        ".studentBlood"
+      ).textContent = `BLOOD: ${student.bloodStatus.toLowerCase()}`;
+
+      //TODO: if prefect or if expelled in modal
 
       document.querySelector("#modal").classList.remove("hide");
       document.querySelector(".close-btn").addEventListener("click", () => {
@@ -435,6 +488,7 @@ function displaySingleStudent(student) {
   }
 
   //EXPELLED
+  //won´t work without (e)
   clone
     .querySelector("[data-field=expelled]")
     .addEventListener("click", (e) => {
@@ -444,9 +498,6 @@ function displaySingleStudent(student) {
   //function to call expel outside with right param
   function expellClicked(e) {
     toggleExpel(e, student);
-    // clone
-    //   .querySelector("[data-field=expelled]")
-    //   .removeEventListener("click", expellClicked);
   }
 
   //INQUISITIONAL
@@ -456,12 +507,9 @@ function displaySingleStudent(student) {
       inquiClicked(e);
     });
 
-  //function to call expel outside with right param
+  //function to call inquisitional outside with right param
   function inquiClicked(e) {
     toggleInquisitional(e, student);
-    clone
-      .querySelector("[data-field=inquisitional]")
-      .removeEventListener("click", inquiClicked);
   }
 
   //PREFECT
@@ -480,22 +528,18 @@ function displaySingleStudent(student) {
 
 //TOGGLE EXPELL
 function toggleExpel(e, student) {
+  //toogle false /true
   if (student.expelled === false) {
     student.expelled = true;
     e.target.style.backgroundColor = "red";
     e.target.textContent = "✗";
-    // card.style.backgroundColor = "red";
   } else {
     student.expelled = false;
     e.target.style.backgroundColor = "rgba(241, 233, 71, 0.9)";
     e.target.textContent = "✓";
   }
 
-  // TODO: show in filtered list with red button
-  // if (student.expelled) {
-  //   console.log(card);
-  //   card.style.backgroundColor = "red";
-  // }
+  // TODO: remove from UI
 }
 
 // TOGGLE INQUISITIONAL
@@ -510,10 +554,11 @@ function toggleInquisitional(e, student) {
     e.target.textContent = "♢";
   }
   //Inqui popup
-  if (student.house != "Slytherin") {
+  if (student.house != "Slytherin" && student.bloodStatus != "Pure") {
     student.inquisitional = false;
     document.querySelector("#inqui-modal").classList.remove("hide");
-    document.querySelector(".inquiTxt").textContent = "Slytherin only!";
+    document.querySelector(".inquiTxt").textContent =
+      "Slytherin and pure only!";
     e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
     e.target.textContent = "♢";
     document.querySelector(".closebtn").addEventListener("click", () => {
@@ -578,7 +623,7 @@ function removeFirst() {
   const studentNr = studentListArr.filter((student) => student.prefect);
   let removed = studentNr.shift();
   document.querySelector("#prefect-modal").classList.add("hide");
-  alert("prefect is removed, toggle btn color error");
+  alert("selected prefect is removed, prefect btn status error");
   //TODO: remove prefect status from btn
 
   displayAsNotPrefect(removed);
@@ -591,13 +636,13 @@ function removeFirst() {
 //remove second student NEED array param
 function removeSecond() {
   const studentNr = studentListArr.filter((student) => student.prefect);
-  let student = studentNr.slice(1, 2);
-  console.log(student);
+  let removed = studentNr.slice(1, 2);
+
+  console.log("selected prefect is removed, prefect btn status error");
   document.querySelector("#prefect-modal").classList.add("hide");
 
   //TODO: remove prefect status from btn
-  alert("prefect is removed, toggle btn color error");
-
+  alert("selected prefect is removed, prefect btn status error");
   //close if you want to leave it without removing
   document.querySelector(".close_but").addEventListener("click", () => {
     document.querySelector("#prefect-modal").classList.add("hide");
