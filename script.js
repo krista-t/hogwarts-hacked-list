@@ -401,7 +401,7 @@ function displaySingleStudent(student) {
       crestImg.style.width = "762px";
       if (student.house === "Gryffindor") {
         bckgrColor.style.backgroundColor = "rgb(116, 8, 8)";
-        crestImg.src = "./images/" + student.house + ".png";
+        crestImg.src = "/images/" + student.house + ".png";
       } else if (student.house === "Slytherin") {
         bckgrColor.style.backgroundColor = "rgb(3, 54, 29)";
         crestImg.src = "./images/" + student.house + ".png";
