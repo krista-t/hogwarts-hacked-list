@@ -404,12 +404,12 @@ function displaySingleStudent(student) {
         crestImg.src = "./images/" + student.house.toLowerCase() + ".png";
       } else if (student.house === "Slytherin") {
         bckgrColor.style.backgroundColor = "rgb(3, 54, 29)";
-        crestImg.src = "./images/" + student.house + ".png";
+        crestImg.src = "./images/" + student.house.toLowerCase() + ".png";
       } else if (student.house === "Hufflepuff") {
-        crestImg.src = "./images/" + student.house + ".png";
+        crestImg.src = "./images/" + student.house.toLowerCase() + ".png";
         bckgrColor.style.backgroundColor = "rgba(114, 85, 5)";
       } else if (student.house === "Ravenclaw") {
-        crestImg.src = "./images/" + student.house + ".png";
+        crestImg.src = "./images/" + student.house.toLowerCase() + ".png";
         bckgrColor.style.backgroundColor = "rgb(7, 16, 145)";
       }
 
