@@ -96,7 +96,7 @@ function setFilter(filter) {
 function buildList() {
   //new list for filter
   const filteredList = filterList(studentListArr);
-  displayStudent(filteredList); //works!
+  displayStudent(filteredList);
 
   //new list for sort from filtered to work together
   const sortedList = getSortResult(studentListArr);
@@ -180,7 +180,7 @@ function isBoy(student) {
 
 //EXPELLED
 function isExpelled(student) {
-  console.log(student.expelled);
+  // console.log(student.expelled);
   if (student.expelled) {
     return true;
   } else {
@@ -444,9 +444,9 @@ function displaySingleStudent(student) {
   //function to call expel outside with right param
   function expellClicked(e) {
     toggleExpel(e, student);
-    clone
-      .querySelector("[data-field=expelled]")
-      .removeEventListener("click", expellClicked);
+    // clone
+    //   .querySelector("[data-field=expelled]")
+    //   .removeEventListener("click", expellClicked);
   }
 
   //INQUISITIONAL
@@ -480,22 +480,22 @@ function displaySingleStudent(student) {
 
 //TOGGLE EXPELL
 function toggleExpel(e, student) {
-  const studentName = e.target.parentNode.parentNode.querySelector(
-    "[data-field=firstname]"
-  ).textContent;
-
-  if (student.expelled === studentName) {
-    console.log("hey name");
-  }
   if (student.expelled === false) {
     student.expelled = true;
     e.target.style.backgroundColor = "red";
     e.target.textContent = "✗";
+    // card.style.backgroundColor = "red";
   } else {
     student.expelled = false;
     e.target.style.backgroundColor = "rgba(241, 233, 71, 0.9)";
     e.target.textContent = "✓";
   }
+
+  // TODO: show in filtered list with red button
+  // if (student.expelled) {
+  //   console.log(card);
+  //   card.style.backgroundColor = "red";
+  // }
 }
 
 // TOGGLE INQUISITIONAL
@@ -523,47 +523,85 @@ function toggleInquisitional(e, student) {
 }
 
 // TOGGLE PREFECT
+
+//TO DO makePrefect function(student)
+
+function displayAsPrefect(e, student) {
+  student.prefect = true;
+  e.target.style.backgroundColor = "yellow";
+  e.target.textContent = "PREF★";
+}
+
+function displayAsNotPrefect(e, student) {
+  student.prefect = false;
+  e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
+  e.target.textContent = "☆ ";
+}
+
 function togglePrefect(e, student) {
   if (student.prefect === false) {
-    student.prefect = true;
-    e.target.style.backgroundColor = "yellow";
-    e.target.textContent = "PREF★";
+    displayAsPrefect(e, student);
+    prefectList(student);
   } else {
     student.prefect = false;
-    e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
-    e.target.textContent = "☆ ";
+    displayAsNotPrefect(e, student);
   }
-  //Prefect popup
+}
+
+//make array and filter
+function prefectList(student) {
+  //filter students
   const studentNr = studentListArr.filter((student) => student.prefect);
   const prefects = studentNr.length;
-
+  // console.log(student);
   if (prefects > 2) {
-    student.prefect = false;
-    e.target.disabled = true;
-    e.target.style.backgroundColor = "rgba(221, 217, 142, 0.9)";
-    e.target.textContent = "☆ ";
-    document.querySelector("#prefect-modal").classList.remove("hide");
-    document.querySelector(".prefAlert h4").textContent =
-      "There can only be two prefects!";
-
-    //TODO: remove one by clicking a or b
-    document.querySelector(".a").addEventListener("click", () => {
-      console.log(studentNr[0]);
-
-      //TODO:
-      if (student.prefect === false) {
-        console.log(student.prefect);
-        document.querySelector("[data-field=prefect]").style.backgroundColor =
-          "rgba(221, 217, 142, 0.9)";
-        // e.target.textContent = "☆ ";
-      }
-      studentNr.shift([0]); //WORKS
-      document.querySelector("#prefect-modal").classList.add("hide");
-    });
-
-    //close if you want to leave it without removing
-    document.querySelector(".close_but").addEventListener("click", () => {
-      document.querySelector("#prefect-modal").classList.add("hide");
-    });
+    showPopUp(studentNr); //call new func
   }
+}
+
+function showPopUp(studentNr) {
+  console.log(studentNr);
+  document.querySelector("#prefect-modal").classList.remove("hide");
+  document.querySelector(".prefAlert h4").textContent =
+    "There can only be two prefects!";
+  document.querySelector(
+    ".a"
+  ).textContent = `remove: ${studentNr[0].firstName}`;
+  document.querySelector(
+    ".b"
+  ).textContent = `remove: ${studentNr[1].firstName}`;
+
+  document.querySelector(".a").addEventListener("click", removeFirst);
+  document.querySelector(".b").addEventListener("click", removeSecond);
+}
+
+//remove first student NEED array param
+function removeFirst() {
+  const studentNr = studentListArr.filter((student) => student.prefect);
+  let removed = studentNr.shift();
+
+  document.querySelector("#prefect-modal").classList.add("hide");
+  alert("prefect is removed, toggle btn error");
+  //TODO: remove prefect status from btn
+
+  //close if you want to leave it without removing
+  document.querySelector(".close_but").addEventListener("click", () => {
+    document.querySelector("#prefect-modal").classList.add("hide");
+  });
+}
+
+//remove second student NEED array param
+function removeSecond() {
+  const studentNr = studentListArr.filter((student) => student.prefect);
+  let student = studentNr.slice(1, 2);
+  console.log(student);
+  document.querySelector("#prefect-modal").classList.add("hide");
+
+  //TODO: remove prefect status from btn
+  alert("prefect is removed, toggle btn error");
+
+  //close if you want to leave it without removing
+  document.querySelector(".close_but").addEventListener("click", () => {
+    document.querySelector("#prefect-modal").classList.add("hide");
+  });
 }
