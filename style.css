@@ -120,7 +120,7 @@ main {
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
   width: 350px;
-  height: 400px;
+  height: 430px;
 }
 
 #card p {
@@ -136,7 +136,7 @@ main {
 }
 
 #card img {
-  max-width: 100%;
+  width: 40%;
   margin-top: 1.5rem;
   border: 5px solid var(--heading-color);
   border-radius: 30%;
@@ -391,4 +391,20 @@ h3 {
 
 .b {
   margin-top: 10px;
+}
+
+/* hacked img */
+.hackedImg {
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  opacity: 90%;
+  filter: blur(5px);
+  display: none;
+  -webkit-filter: blur(5px);
 }

@@ -14,6 +14,7 @@ const StudentList = {
   nickName: "",
   house: "",
   gender: "",
+  image: "",
   bloodStatus: "",
   expelled: false,
   inquisitional: false,
@@ -656,7 +657,7 @@ function removeSecond() {
 //HACK FUNCTION
 function hackTheSystem() {
   systemHacked = true;
-  //injecting myself in the  list
+  //injecting myself object
   const injectMyself = Object.create(StudentList);
   injectMyself.firstName = "Kristina";
   injectMyself.nickName = "Krista";
